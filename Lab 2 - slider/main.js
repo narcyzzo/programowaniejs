@@ -1,29 +1,53 @@
-// notatnik z zajęć
+let currentSlide = 0;
+let isPaused = false;
+let intervalId;
+const slides = document.querySelectorAll(".slide");
+const totalSlides = slides.length;
 
-const main = document.querySelector('main')
+function showSlide() {
+    document.querySelector('.slides').style.transform = `translateX(${-currentSlide * 100}%)`;
+}
 
-// jednorazowe wykonanie kodu po określonym czasie
-const timeoutRef = setTimeout(
-    () => {
-        main.innerHTML = 'Msg from setTimeout'
-    },
-    2000
-)
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    showSlide();
+}
 
-// wykonywanie kodu co określony czas
-let licznik = 0
-const intervalRef = setInterval(
-    () => {
-        main.innerHTML = `Msg from setInterval: ${licznik++}`
-    },
-    4000
-)
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    showSlide();
+}
 
-// kasujemy setInterval
-// clearInterval(intervalRef)
+function pauseSlider() {
+    clearInterval(intervalId);
+    isPaused = true;
+}
 
-// kasujemy setTimeout
-// clearTimeout(intervalRef)
+function startSlider() {
+    intervalId = setInterval(() => {
+        if (!isPaused) {
+            nextSlide();
+        }
+    }, 2000); // Ustaw interwał według własnych preferencji
+    isPaused = false;
+}
 
+startSlider();
 
-// window.requestAnimationFrame
+document.querySelector('.prevBtn').addEventListener('click', () => {
+    pauseSlider();
+    prevSlide();
+});
+
+document.querySelector('.nextBtn').addEventListener('click', () => {
+    pauseSlider();
+    nextSlide();
+});
+
+document.querySelector('.pauseBtn').addEventListener('click', () => {
+    pauseSlider();
+});
+
+document.querySelector('.playBtn').addEventListener('click', () => {
+    startSlider();
+});
