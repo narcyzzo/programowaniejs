@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notatki</title>
+    <style>
+        .note {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Notatki</h1>
+    <form id="note-form">
+        <label for="title">Tytuł:</label><br>
+        <input type="text" id="title" name="title" required><br>
+        <label for="content">Treść:</label><br>
+        <textarea id="content" name="content" required></textarea><br>
+        <label for="tags">Tagi:</label><br>
+        <input type="text" id="tags" name="tags"><br>
+        <label for="color">Kolor:</label><br>
+        <input type="color" id="color" name="color"><br>
+        <label for="pin">Przypnij:</label>
+        <input type="checkbox" id="pin" name="pin"><br>
+        <button type="submit">Dodaj notatkę</button>
+    </form>
+
+    <h2>Wyszukiwanie:</h2>
+    <label for="search-input">Wyszukaj w tytule lub treści:</label>
+    <input type="text" id="search-input"><br>
+    <label for="search-tags-input">Wyszukaj po tagach:</label>
+    <input type="text" id="search-tags-input"><br>
+
+    <div id="notes-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
