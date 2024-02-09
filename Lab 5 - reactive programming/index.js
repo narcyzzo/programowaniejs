@@ -1,32 +1,32 @@
-interval();
-
-function interval() {
-  let timer = 1
-  setInterval(
-    () => {
-      // tutaj mamy coupling - interval ma na sztywno zaszyte w sobie kolejne funkcje (..i logger)
-      saveCToSessionStorage(timer)
-      discoverPowerBallNumber(timer)
-      timer++
-    }
-    , 1000)
-}
-
-class Logger {
-  static log(data) {
-    console.log(data)
+const MyLibrary = (function() {
+  function logger(data) {
+    console.log(data);
   }
-}
 
-function saveCToSessionStorage(data) {
-  console.log('[reader C]', data)
-  const storageData = { data }
-  sessionStorage.setItem('C', JSON.stringify(storageData))
-  // brudzimy funkcję loggerem - to nie jest jej funkcjonalność!
-  Logger.log(`[log from C] ${data}`)
-}
+  return {
+    interval(callback) {
+      let timer = 1;
+      setInterval(() => {
+        callback(timer);
+        timer++;
+      }, 2000);
+    },
 
-function discoverPowerBallNumber(data) {
-  const number = Math.floor(Math.random() * data * 100)
-  console.log('[powerball number]', number)
-}
+    saveCToSessionStorage(data) {
+      console.log('[reader C]', data);
+      const storageData = { data };
+      sessionStorage.setItem('C', JSON.stringify(storageData));
+      logger(`[log from C] ${data}`);
+    },
+
+    discoverPowerBallNumber(data) {
+      const number = Math.floor(Math.random() * data * 100);
+      console.log('[powerball number]', number);
+    }
+  };
+})();
+
+MyLibrary.interval((timer) => {
+  MyLibrary.saveCToSessionStorage(timer);
+  MyLibrary.discoverPowerBallNumber(timer);
+});
