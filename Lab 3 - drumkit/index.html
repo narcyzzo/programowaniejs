@@ -6,8 +6,18 @@
     <title>Document</title>
 </head>
 <body>
-    <audio src="./sounds/clap.wav" controls id="s1"></audio>
-    <audio src="./sounds/hihat.wav" controls id="s2"></audio>
+    <h1>drumkit</h1>
+    <div>
+        <button onclick="playSound('kick')">Kick</button>
+        <button onclick="playSound('snare')">Snare</button>
+        <button onclick="playSound('hihat')">Hi-Hat</button>
+    </div>
+    <div>
+        <button onclick="startRecording()">Start Recording</button>
+        <button onclick="stopRecording()">Stop Recording</button>
+        <button onclick="playRecording()">Play Recording</button>
+    </div>
+
     <script src="drumkit.js"></script>
-</body> 
+</body>
 </html>

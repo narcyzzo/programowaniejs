@@ -1,15 +1,42 @@
-document.addEventListener('keypress', onKeyPress)
+const audioFiles = {
+    kick: 'kick.wav',
+    snare: 'snare.wav',
+    hihat: 'hihat.wav'
+};
 
-const KeyToSound = {
-    'a': document.querySelector('#s1'),
-    's': document.querySelector('#s2')
-}
+let isRecording = false;
+let recordedTracks = [[], [], [], []];
 
-function onKeyPress(event) {
-    const sound = KeyToSound[event.key]
-    playSound(sound)
-}
 function playSound(sound) {
-    sound.currentTime = 0
-    sound.play()
+    const audio = new Audio(audioFiles[sound]);
+    audio.play();
+
+    if (isRecording) {
+        const time = Date.now();
+        recordedTracks.forEach((track, index) => {
+            if (index === 0) track.push({ sound, time });
+            else track.push(null);
+        });
+    }
+}
+
+function startRecording() {
+    isRecording = true;
+    recordedTracks = [[], [], [], []];
+}
+
+function stopRecording() {
+    isRecording = false;
+}
+
+function playRecording() {
+    recordedTracks.forEach(track => {
+        track.forEach(event => {
+            if (event) {
+                setTimeout(() => {
+                    playSound(event.sound);
+                }, event.time - recordedTracks[0][0].time);
+            }
+        });
+    });
 }
